@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 
-const Login = () => {
+const Login = ({ updateUserDetails }) => {
   const [formData, setFormData] = useState({
     username: '',
     password: ''
@@ -46,7 +47,7 @@ const Login = () => {
       };
       try {
         const response = await axios.post('http://localhost:5001/auth/login', body, config);
-        
+
         updateUserDetails(response.data.user);
       } catch (error) {
         console.log(error);

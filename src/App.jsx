@@ -6,6 +6,7 @@ import AppLayout from './layout/AppLayout';
 import Dashboard from './pages/Dashboard';
 import axios from 'axios';
 
+
 function App() {
   const [userDetails, setUserDetails] = useState(null);
 
@@ -14,7 +15,7 @@ function App() {
   };
 
   const isUserLoggedIn = async () => {
-    const response = await axios.post('http://localhost:5001/auth/is-user-logged-in', {}, {
+    const response = await axios.post(' http://localhost:5001/auth/is-user-logged-in', {}, {
       withCredentials: true
     });
     updateUserDetails(response.data.user);
@@ -23,6 +24,19 @@ function App() {
   useEffect(() => {
     isUserLoggedIn();
   }, []);
+
+  const logout = async () => {
+    try {
+      await axios.post('http://localhost:5001/auth/logout', {}, {
+        withCredentials: true
+      });
+      updateUserDetails(null);
+      navigate('/login');
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
+  };
+
 
   return (
     <Routes>
@@ -54,12 +68,12 @@ function App() {
         path="/dashboard"
         element={
           userDetails ?
-            <Dashboard />
+            <Dashboard logout={logout} />
             :
             <Navigate to="/login" />
-
         }
       />
+
     </Routes>
   );
 }

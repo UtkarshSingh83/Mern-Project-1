@@ -1,11 +1,12 @@
-import React from 'react'
+import React from 'react';
 
-function Dashboard() {
-  return (
-    <div>
-        <h1>Welcome to dashborad</h1>
-    </div>
-  )
-}
+const Dashboard = ({ logout }) => {
+    return (
+        <div>
+            <h1>Welcome to Dashboard</h1>
+            <button onClick={logout}>Logout</button>
+        </div>
+    );
+};
 
-export default Dashboard
+export default Dashboard;
